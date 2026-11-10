@@ -1,0 +1,24 @@
+# Builds and tests everything. Runs on every PR, and release.yml calls it
+# before releasing so a version never goes out unless every test passes.
+name: Checks
+on:
+  pull_request:
+    branches: [master]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: swift test
+
+  # Compiles the UIKit code, which the tests (on macOS) don't.
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: xcodebuild -scheme Terminal.swift -destination 'generic/platform=iOS Simulator' build

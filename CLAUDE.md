@@ -28,22 +28,19 @@ first: change terminal.svelte, then port it.
 
 ## Code quality
 
-After every change, before committing:
-
-1. Run `swift test`.
-2. Build for iOS, which compiles the UIKit code that `swift test` doesn't:
-   `xcodebuild -scheme Terminal.swift -destination 'generic/platform=iOS Simulator' build`.
+Run `./checks.sh` before opening a PR. It runs every check: `swift test`, then
+a build for iOS, which compiles the UIKit code that `swift test` doesn't. No
+GitHub workflow checks PRs: the maintainer's merge queue runs the same checks
+when it reviews one.
 
 Indent with tabs. Commit frequently as you work.
 
 ## Releases
 
-Merging a PR into `master` is the only way to release. Never run
-`gh release create` or push a tag by hand. A merge that doesn't bump the
-version releases nothing.
+Merging a PR into `master` is the only way to release. To release, bump the
+version in `VERSION` in your PR. After the merge, the merge queue runs
+`./release.sh`, which creates the `v<version>` GitHub release and tag, which is
+what Swift Package Manager resolves. A merge that doesn't bump the version
+releases nothing.
 
-To release, bump the version in `VERSION` in your PR. On every push to
-`master`, `.github/workflows/release.yml` checks whether a `v<version>` tag
-exists yet. If it doesn't, it runs `checks.yml` and, only if everything passes,
-creates the `v<version>` GitHub release and tag, which is what Swift Package
-Manager resolves. PRs run `checks.yml` too.
+Never run `release.sh` or `gh release create`, or push a tag, yourself.

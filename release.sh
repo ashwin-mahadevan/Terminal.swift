@@ -4,8 +4,9 @@
 # the commit this is run from, and prints v<version>. When the version is
 # already out it does nothing, so it's safe to run again after a failure.
 #
-# The maintainer's merge queue runs this after a merge to master. Never run it
-# yourself.
+# Nothing runs this by itself: whoever merges into master runs it from the
+# merged commit, right after the merge. Nobody else runs it, and nobody runs
+# `gh release create` or pushes a tag by hand.
 set -euo pipefail
 cd "$(dirname "$0")"
 

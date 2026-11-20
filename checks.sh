@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Runs every check a change has to pass: run it before opening a PR. The checks
-# run one at a time, and a failure doesn't stop the ones after it. The last
-# lines say which passed and which failed, and the exit status is non-zero if
-# any failed.
+# Runs every check a change has to pass: run it before the change is merged. No
+# GitHub workflow checks a change. The checks run one at a time, and a failure
+# doesn't stop the ones after it. The last lines say which passed and which
+# failed, and the exit status is non-zero if any failed.
 set -u
 cd "$(dirname "$0")"
 
